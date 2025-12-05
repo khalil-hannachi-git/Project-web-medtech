@@ -3,7 +3,7 @@ import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import { useAuth } from '../lib/useAuth'
 import api from '../api/client'
-
+import dayjs from 'dayjs';
 export default function TaskManagement() {
   const { user } = useAuth()
   const [classes, setClasses] = useState([])
@@ -11,7 +11,7 @@ export default function TaskManagement() {
   const [tasks, setTasks] = useState([])
   const [submissions, setSubmissions] = useState([])
   const [showTaskForm, setShowTaskForm] = useState(false)
-  const [newTask, setNewTask] = useState({ title: '', description: '' })
+  const [newTask, setNewTask] = useState({ title: '', description: '', deadline: '' })
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('tasks')
 
@@ -47,6 +47,9 @@ export default function TaskManagement() {
         api.get('/submissions/task/' + classId).catch(() => ({ data: [] }))
       ])
       setTasks(tasksResp.data)
+      //reading the first element of tasks
+      console.log(`I have ${JSON.stringify(tasksResp.data[0], null, 2)}`)
+
       setSubmissions(submissionsResp.data)
     } catch (err) {
       console.error('Error fetching tasks:', err)
@@ -60,7 +63,7 @@ export default function TaskManagement() {
         ...newTask,
         classId: selectedClass._id
       })
-      setNewTask({ title: '', description: '' })
+      setNewTask({ title: '', description: '', deadline: '' })
       setShowTaskForm(false)
       fetchTasksAndSubmissions(selectedClass._id)
     } catch (err) {
@@ -127,7 +130,7 @@ export default function TaskManagement() {
                       >
                         <div className="font-medium">{cls.name}</div>
                         <div className="text-xs text-slate-400 mt-1">
-                          {cls.tasks?.length || 0} tasks
+                          {tasks?.length || 0} tasks
                         </div>
                       </button>
                     ))}
@@ -173,6 +176,13 @@ export default function TaskManagement() {
 
                         {showTaskForm && (
                           <form onSubmit={handleCreateTask} className="p-4 mb-4 rounded card space-y-3">
+                              <p className="text-sm text-slate-400 mb-2">Set Deadline</p>                            
+                              <input type="date"
+                                value={newTask.deadline}
+                                onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
+                                className="w-full p-2 rounded bg-gray-800 border border-gray-700"
+                                
+                              />
                             <input
                               required
                               value={newTask.title}
@@ -203,6 +213,7 @@ export default function TaskManagement() {
                                   <div className="flex-1">
                                     <h5 className="font-semibold text-lg">{task.title}</h5>
                                     <p className="text-slate-300 text-sm mt-1">{task.description}</p>
+                                    <p className="text-xs text-slate-400 mt-1">Due {task.deadline ? dayjs(task.deadline).format('DD/MM/YYYY') : '—'}</p>
                                   </div>
                                   <button
                                     onClick={() => handleDeleteTask(task._id)}

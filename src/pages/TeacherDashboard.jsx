@@ -3,7 +3,7 @@ import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import { useAuth } from '../lib/useAuth'
 import api from '../api/client'
-
+import dayjs from 'dayjs'
 export default function TeacherDashboard() {
   const { user } = useAuth()
   const [classes, setClasses] = useState([])
@@ -11,7 +11,7 @@ export default function TeacherDashboard() {
   const [students, setStudents] = useState([])
   const [tasks, setTasks] = useState([])
   const [showTaskForm, setShowTaskForm] = useState(false)
-  const [newTask, setNewTask] = useState({ title: '', description: '' })
+  const [newTask, setNewTask] = useState({ title: '', description: '' , deadline: ''})
   const [loading, setLoading] = useState(true)
   const [activeTab, setActiveTab] = useState('classes')
 
@@ -58,7 +58,7 @@ export default function TeacherDashboard() {
         ...newTask,
         classId: selectedClass._id
       })
-      setNewTask({ title: '', description: '' })
+      setNewTask({ title: '', description: '', deadline: '' })
       setShowTaskForm(false)
       fetchTasksForClass(selectedClass._id)
     } catch (err) {
@@ -207,6 +207,13 @@ export default function TeacherDashboard() {
 
                           {showTaskForm && (
                             <form onSubmit={handleCreateTask} className="p-4 mb-4 rounded card space-y-3">
+                              <p className="text-sm text-slate-400 mb-2">Set Deadline</p>
+                              <input type="date"
+                                value={newTask.deadline}
+                                onChange={(e) => setNewTask({ ...newTask, deadline: e.target.value })}
+                                className="w-full p-2 rounded bg-gray-800 border border-gray-700"
+                                
+                              />
                               <input
                                 required
                                 value={newTask.title}
@@ -235,6 +242,7 @@ export default function TeacherDashboard() {
                                 <div className="mt-3 text-sm text-slate-400">
                                   Created: {new Date(task.createdAt).toLocaleDateString()}
                                 </div>
+                                 <p className="text-sm text-slate-400 mt-3"> Deadline: {task.deadline ? dayjs(task.deadline).format('DD/MM/YYYY') : '—'}</p>
                               </div>
                             ))}
                           </div>

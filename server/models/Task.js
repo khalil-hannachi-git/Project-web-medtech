@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const TaskSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
+  deadline: { type: Date },
   class: { type: mongoose.Schema.Types.ObjectId, ref: 'Class' },
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   attachments: [{ type: String }], // file URLs

@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import { useAuth } from '../lib/useAuth'
 import api from '../api/client'
+import dayjs from 'dayjs'
 
 export default function TaskDetail(){
   const { id } = useParams()
@@ -153,8 +154,11 @@ export default function TaskDetail(){
                 )}
               </div>
               <div className="text-sm text-slate-400">
-                Created: {new Date(task.createdAt).toLocaleDateString()}
+                Created: {task.deadline ? dayjs(task.deadline).format('DD/MM/YYYY') : new Date(task.createdAt).toLocaleDateString()}
+                
               </div>
+              <div className="text-sm text-slate-400">
+                Due: {task.deadline ? dayjs(task.deadline).format('DD/MM/YYYY') : '—'}</div>
             </div>
 
             {/* Student submission section */}

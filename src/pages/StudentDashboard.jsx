@@ -146,7 +146,7 @@ export default function StudentDashboard() {
                                 </div>
                                 <span className={`text-2xl ml-3 group-hover:scale-125 transition-transform`}>{config.icon}</span>
                               </div>
-                              <p className="text-slate-300 text-sm mb-4 line-clamp-2">{task.description}</p>
+                              <p className="text-slate-300 text-sm mb-4 line-clamp-2">{task.description}</p>  
                               <div className="flex items-center justify-between pt-4 border-t" style={{ borderColor: `${config.border.split('-')[1]}` }}>
                                 <span className={`text-xs font-semibold ${config.text}`}>
                                   {config.label}

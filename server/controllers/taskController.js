@@ -3,9 +3,9 @@ import ClassModel from '../models/Class.js'
 import path from 'path'
 
 export async function createTask(req, res) {
-  const { title, description, classId } = req.body
+  const { title, description, deadline, classId } = req.body
   const attachments = (req.files || []).map(f => `/uploads/${path.basename(f.path)}`)
-  const t = new Task({ title, description, class: classId, createdBy: req.userId, attachments })
+  const t = new Task({ title, description, deadline, class: classId, createdBy: req.userId, attachments })
   await t.save()
   await ClassModel.findByIdAndUpdate(classId, { $addToSet: { tasks: t._id } })
   res.json(t)
