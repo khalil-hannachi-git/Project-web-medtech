@@ -10,7 +10,9 @@ import TaskDetail from './pages/TaskDetail'
 import Profile from './pages/Profile'
 import ClassManagement from './pages/ClassManagement'
 import TaskManagement from './pages/TaskManagement'
+import QuizzManagement from './pages/QuizzManagement'
 import { useAuth } from './lib/useAuth'
+
 
 function ProtectedRoute({ children, requiredRoles }) {
   const { user, loading } = useAuth()
@@ -46,7 +48,8 @@ export default function App() {
       
       <Route path="/teacher/classes" element={<ProtectedRoute requiredRoles={['teacher']}><ClassManagement /></ProtectedRoute>} />
       <Route path="/teacher/tasks" element={<ProtectedRoute requiredRoles={['teacher']}><TaskManagement /></ProtectedRoute>} />
-      
+      <Route path="/teacher/quizzes" element={<ProtectedRoute requiredRoles={['teacher']}><QuizzManagement /></ProtectedRoute>} />
+      <Route path="/student/quizzes" element={<ProtectedRoute requiredRoles={['student']}><QuizzManagement /></ProtectedRoute>} />
       <Route path="/tasks/:id" element={<ProtectedRoute><TaskDetail /></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       

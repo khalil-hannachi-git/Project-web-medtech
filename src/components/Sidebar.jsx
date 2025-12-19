@@ -55,6 +55,9 @@ export default function Sidebar(){
             <NavLink to="/teacher/tasks" className={({isActive})=>`block p-2 rounded ${isActive? 'bg-gray-800':'hover:bg-gray-900'}`}>
               Manage Tasks
             </NavLink>
+            <NavLink to="/teacher/quizzes" className={({isActive})=>`block p-2 rounded ${isActive? 'bg-gray-800':'hover:bg-gray-900'}`}>
+              Manage Quizzes
+            </NavLink>
           </>
         )}
 

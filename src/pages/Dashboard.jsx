@@ -5,7 +5,6 @@ import Sidebar from '../components/Sidebar'
 import Topbar from '../components/Topbar'
 import TaskCard from '../components/TaskCard'
 import TaskEditor from '../components/TaskEditor'
-
 export default function Dashboard(){
   const { user } = useAuth()
   const [tasks, setTasks] = useState([])

@@ -9,6 +9,7 @@ import classRoutes from './routes/classes.js'
 import taskRoutes from './routes/tasks.js'
 import submissionRoutes from './routes/submissions.js'
 import uploadRoutes from './routes/uploads.js'
+import quizzes from './routes/quizzes.js'
 import path from 'path'
 
 dotenv.config()
@@ -47,7 +48,7 @@ app.use('/api/classes', classRoutes)
 app.use('/api/tasks', taskRoutes)
 app.use('/api/submissions', submissionRoutes)
 app.use('/api/uploads', uploadRoutes)
-
+app.use('/api/quizzes', quizzes)
 // 404 handler
 app.use('*', (req, res) => {
   res.status(404).json({ message: 'Route not found' })
